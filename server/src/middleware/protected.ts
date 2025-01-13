@@ -1,12 +1,12 @@
 import { User, UserModel } from "../model/user.model";
-import AsyncHandler from "./AsyncHandler";
-import { ErrorApi } from "./ErrorHandler";
-import JWT from "./jwt";
+import AsyncHandler from "../lib/AsyncHandler";
+import { ErrorApi } from "../lib/ErrorHandler";
+import JWT from "../lib/jwt";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: User | null
+      user?: User | null;
     }
   }
 }
@@ -31,8 +31,8 @@ export const Protected = AsyncHandler(async (req, res, next) => {
       throw new ErrorApi(401, "User not found");
     }
 
-	  req.user = user;
-	  next()
+    req.user = user;
+    next();
   } catch (error) {
     next(error);
   }

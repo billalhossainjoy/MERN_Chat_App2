@@ -1,9 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface User extends Document {
+  _id: string;
   fullName: string;
   email: string;
   password: string;
+  profilePic: string;
 }
 
 const userSchema: Schema = new Schema<User>({
@@ -19,6 +21,9 @@ const userSchema: Schema = new Schema<User>({
   password: {
     type: String,
     required: true,
+  },
+  profilePic: {
+    type: String,
   },
 });
 

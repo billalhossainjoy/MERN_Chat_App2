@@ -4,6 +4,7 @@ import { DefaultErrorHandler, NotFoundHandler } from "./lib/ErrorHandler";
 import cors from "cors";
 import authRouter from "./router/auth.router";
 import cookieParser from "cookie-parser";
+import userRouter from "./router/user.router";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/auth", authRouter);
+app.use("/user", userRouter)
 
 // Not found handler
 app.use(NotFoundHandler);
