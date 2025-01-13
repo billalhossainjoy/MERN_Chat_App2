@@ -3,6 +3,7 @@ import http from "http";
 import { DefaultErrorHandler, NotFoundHandler } from "./lib/ErrorHandler";
 import cors from "cors";
 import authRouter from "./router/auth.router";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -18,9 +19,10 @@ const server = http.createServer(app);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
-app.use("/auth", authRouter)
+app.use("/auth", authRouter);
 
 // Not found handler
 app.use(NotFoundHandler);

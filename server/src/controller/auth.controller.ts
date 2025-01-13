@@ -32,9 +32,10 @@ class AuthController extends JWT {
       });
       res.cookie("AccessToken", accessToken);
 
-      return ResApi(res, 200, "User registered successfully.", {
-        email: newUser.email,
-        accessToken,
+      res.cookie("AccessToken", accessToken, {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
       });
     } catch (error) {
       throw error;
@@ -65,7 +66,11 @@ class AuthController extends JWT {
         fullName: existingUser.fullName,
         email: existingUser.email,
       });
-      res.cookie("AccessToken", accessToken);
+      res.cookie("AccessToken", accessToken, {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+      });
 
       return ResApi(res, 200, "User logged in successfully.", {
         fullName: existingUser.fullName,
