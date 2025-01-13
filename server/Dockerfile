@@ -5,9 +5,11 @@ WORKDIR /app
 
 ENV NODE_ENV=development
 
-COPY . .
+COPY package*.json .
 
 RUN npm ci --only=development
+
+COPY . .
 
 EXPOSE 5000
 
