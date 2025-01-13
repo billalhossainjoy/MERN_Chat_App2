@@ -76,6 +76,15 @@ class AuthController extends JWT {
       throw error;
     }
   });
+
+  logout = AsyncHandler(async (req, res) => {
+    try {
+      res.clearCookie("AccessToken");
+      return ResApi(res, 200, "User logged out successfully.");
+    } catch (error) {
+      throw error;
+    }
+  });
 }
 
 export default AuthController;

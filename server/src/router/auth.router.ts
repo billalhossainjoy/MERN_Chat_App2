@@ -12,6 +12,7 @@ class AuthRouter extends AuthController {
   init() {
     this.router.post("/signup", this.signup.bind(this));
     this.router.post("/login", this.login.bind(this));
+    this.router.get("/logout", this.logout.bind(this));
   }
 }
 
