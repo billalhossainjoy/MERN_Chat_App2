@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-class ErrorApi extends Error {
+export class ErrorApi extends Error {
   status: number;
   message: string;
 

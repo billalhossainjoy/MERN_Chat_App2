@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { DefaultErrorHandler, NotFoundHandler } from "./lib/ErrorHandler";
 import cors from "cors";
+import authRouter from "./router/auth.router";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.use("/auth", authRouter)
 
 // Not found handler
 app.use(NotFoundHandler);

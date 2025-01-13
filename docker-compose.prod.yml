@@ -16,8 +16,8 @@ services:
     environment:
       PORT: 4000
       NODE_ENV: "production"
-      MONGO_URI: "mongodb://mongo:27017/Chatapp2"
       CLIENT_URI: "http://localhost:4173"
+    env_file: "./server/.env"
     restart: always
     depends_on:
       - mongo
