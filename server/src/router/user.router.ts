@@ -15,6 +15,7 @@ class UserRouter extends UserController {
     this.router
       .route("/update-profile")
       .get(Protected, this.updateProfile.bind(this));
+    this.router.route("/get-messages").get(Protected)
   }
 }
 

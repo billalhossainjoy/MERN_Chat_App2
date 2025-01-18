@@ -35,9 +35,9 @@ class UserController extends Cloudinary {
         {
           new: true,
         }
-      );
+      ).select("-password");
 
-      return ResApi(res, 200, "ok");
+      return ResApi(res, 200, "user profile is updated");
     } catch (error) {
       throw error;
     }
