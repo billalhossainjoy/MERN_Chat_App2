@@ -25,6 +25,7 @@ app.use(cookieParser());
 // Routes
 app.use("/auth", authRouter);
 app.use("/user", userRouter)
+app.use("/message", userRouter)
 
 // Not found handler
 app.use(NotFoundHandler);
