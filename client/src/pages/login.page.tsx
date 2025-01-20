@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { login, isLogIng } = useAuthStore();
+  const { login, isLoggingIn } = useAuthStore();
 
   const submitHandler = async (data: loginSchemaType) => {
     login(data);
@@ -54,8 +54,8 @@ const LoginPage: React.FC = () => {
               Icon={Key}
             />
 
-            <button className="btn btn-primary w-full" disabled={isLogIng}>
-              {isLogIng ? (
+            <button className="btn btn-primary w-full" disabled={isLoggingIn}>
+              {isLoggingIn ? (
                 <>
                   <Loader2 className="size-5 animate-spin" />
                   loading...

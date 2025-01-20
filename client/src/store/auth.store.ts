@@ -8,7 +8,8 @@ interface AuthState {
   isCheckingAuth: boolean;
   isSigningUp: boolean;
   isUpdatingProfile: boolean;
-  isLogIng: boolean;
+  isLoggingIn: boolean;
+  isLoggingOut: boolean;
   checkAuth: () => void;
   signup: (data: signupSchemaType) => void;
   login: (data: loginSchemaType) => void;
@@ -22,7 +23,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   isCheckingAuth: false,
   isSigningUp: false,
   isUpdatingProfile: false,
-  isLogIng: false,
+  isLoggingOut: false,
+  isLoggingIn: false,
   checkAuth: async () => {
     try {
       const res = await ApiClient.get("/auth/check");
@@ -47,7 +49,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         authUser: res.data,
       });
-      toast.success(res.data.data.message);
+      toast.success(res.data.message);
     } catch (error) {
       set({
         authUser: null,
@@ -58,7 +60,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
   login: async (formData) => {
-    set({ isLogIng: true });
+    set({ isLoggingIn: true });
     try {
       const res = await ApiClient("/auth/login", {
         method: "POST",
@@ -67,7 +69,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         authUser: res.data.data,
       });
-      toast.success(res.data.data.message);
+      toast.success(res.data.message);
     } catch (error) {
       set({
         authUser: null,
@@ -75,10 +77,23 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.log(error);
       toast.error("Login failed");
     } finally {
-      set({ isLogIng: false });
+      set({ isLoggingIn: false });
     }
   },
-  logout: async () => {},
+  logout: async () => {
+    set({ isLoggingOut: true });
+    try {
+      const res = await ApiClient.get("/auth/logout");
+      set({
+        authUser: null,
+      });
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      set({ isLoggingOut: false });
+    }
+  },
   updateProfile: async () => {},
   connectSocket: async () => {},
 }));
