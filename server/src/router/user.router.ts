@@ -11,11 +11,10 @@ class UserRouter extends UserController {
   }
 
   init() {
-    this.router.route("/get").get(Protected, this.get.bind(this));
     this.router
       .route("/update-profile")
       .get(Protected, this.updateProfile.bind(this));
-    this.router.route("/get-messages").get(Protected)
+    this.router.route("/get-messages").get(Protected);
   }
 }
 

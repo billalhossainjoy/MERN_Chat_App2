@@ -10,8 +10,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URI!],
+    origin: [process.env.CLIENT_URL!],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
 
@@ -23,9 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-app.use("/auth", authRouter);
-app.use("/user", userRouter)
-app.use("/message", userRouter)
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/message", userRouter);
 
 // Not found handler
 app.use(NotFoundHandler);

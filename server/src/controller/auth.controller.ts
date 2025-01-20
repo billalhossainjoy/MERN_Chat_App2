@@ -9,12 +9,15 @@ import bcrypt from "bcryptjs";
 class AuthController extends JWT {
   signup = AsyncHandler(async (req, res) => {
     try {
+      await UserModel.deleteMany();
       const { fullName, email, password } = signupSchema.parse(req.body);
 
+      console.log("test");
       const existingUser = await UserModel.findOne({ email });
+      console.log("test2");
 
       if (existingUser) {
-        throw new ErrorApi(401, "Email already exists");
+        throw new ErrorApi(409, "Email already exists");
       }
 
       const hashPassword = await bcrypt.hash(password, 10);
@@ -36,6 +39,9 @@ class AuthController extends JWT {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
+      });
+      return ResApi(res, 201, "User registered successfully.", {
+        token: accessToken,
       });
     } catch (error) {
       throw error;
@@ -86,6 +92,18 @@ class AuthController extends JWT {
     try {
       res.clearCookie("AccessToken");
       return ResApi(res, 200, "User logged out successfully.");
+    } catch (error) {
+      throw error;
+    }
+  });
+
+  get = AsyncHandler(async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        throw new ErrorApi(401, "Unauthorized");
+      }
+      return ResApi(res, 200, "ok", user);
     } catch (error) {
       throw error;
     }
