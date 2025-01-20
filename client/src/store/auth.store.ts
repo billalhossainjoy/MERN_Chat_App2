@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ApiClient } from "../lib/apiClient";
-import { signupSchemaType } from "../schema/auth.schema";
+import { loginSchemaType, signupSchemaType } from "../schema/auth.schema";
 import toast from "react-hot-toast";
 
 interface AuthState {
@@ -8,10 +8,10 @@ interface AuthState {
   isCheckingAuth: boolean;
   isSigningUp: boolean;
   isUpdatingProfile: boolean;
-  isLoggIng: boolean;
+  isLogIng: boolean;
   checkAuth: () => void;
   signup: (data: signupSchemaType) => void;
-  login: () => void;
+  login: (data: loginSchemaType) => void;
   logout: () => void;
   updateProfile: () => void;
   connectSocket: () => void;
@@ -22,7 +22,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isCheckingAuth: false,
   isSigningUp: false,
   isUpdatingProfile: false,
-  isLoggIng: false,
+  isLogIng: false,
   checkAuth: async () => {
     try {
       const res = await ApiClient.get("/auth/check");
@@ -57,7 +57,27 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isSigningUp: false });
     }
   },
-  login: async () => {},
+  login: async (formData) => {
+    set({ isLogIng: true });
+    try {
+      const res = await ApiClient("/auth/login", {
+        method: "POST",
+        data: formData,
+      });
+      set({
+        authUser: res.data.data,
+      });
+      toast.success(res.data.data.message);
+    } catch (error) {
+      set({
+        authUser: null,
+      });
+      console.log(error);
+      toast.error("Login failed");
+    } finally {
+      set({ isLogIng: false });
+    }
+  },
   logout: async () => {},
   updateProfile: async () => {},
   connectSocket: async () => {},

@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
             </Link>{" "}
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <Link to="/settings" className="btn btn-sm gap-2 transition-colors">
               <Settings className="w-4 h-4" />{" "}
               <span className="hidden sm:inline">Settings</span>
@@ -32,9 +32,9 @@ const Navbar: React.FC = () => {
                   <User />
                   <span>Profile</span>
                 </Link>
-                <button>
-                  <LogOut />
-                  <span>Logout</span>
+                <button className="flex items-center gap-2">
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Logout</span>
                 </button>
               </>
             )}
