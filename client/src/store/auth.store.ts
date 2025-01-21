@@ -6,7 +6,7 @@ import {
   updateSchemaType,
 } from "../schema/auth.schema";
 import toast from "react-hot-toast";
-
+const date = new Date();// TODO: its for demo remove this 
 interface AuthState {
   authUser: IUser | null;
   isCheckingAuth: boolean;
@@ -20,6 +20,7 @@ interface AuthState {
   logout: () => void;
   updateProfile: (data: updateSchemaType) => void;
   connectSocket: () => void;
+  onlineUsers: string[];
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -29,6 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isUpdatingProfile: false,
   isLoggingOut: false,
   isLoggingIn: false,
+  onlineUsers: ["1"],
   checkAuth: async () => {
     set({ isCheckingAuth: true });
     try {

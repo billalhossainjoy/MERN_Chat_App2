@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
             {authUser && (
               <>
                 <Link to="/profile" className="btn btn-sm gap-2">
-                  <User className="w-4 h-4"/>
+                  <User className="w-4 h-4" />
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
                 <button
@@ -44,7 +44,11 @@ const Navbar: React.FC = () => {
                 >
                   <LogOut className="w-4 h-4" />
                   <span className="hidden sm:inline">
-                    {isLoggingOut ? <Loader2 className="animate-spin"/> : "Logout"}
+                    {isLoggingOut ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      "Logout"
+                    )}
                   </span>
                 </button>
               </>
