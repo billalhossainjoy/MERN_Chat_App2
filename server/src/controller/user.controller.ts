@@ -10,8 +10,11 @@ class UserController extends Cloudinary {
 
   updateProfile = AsyncHandler(async (req, res) => {
     try {
+      console.log('test')
       const { profilePic } = req.body;
       const userId = req.user?._id;
+
+      console.log('test')
 
       const uploadResponse = await this.uploader(profilePic);
       const updatedUser = await UserModel.findByIdAndUpdate(

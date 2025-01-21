@@ -76,8 +76,10 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
       <AuthImagePattern
-        title="Join our community"
-        subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+        title={"Welcome back!"}
+        subtitle={
+          "Sign in to continue your conversations and catch up with your messages."
+        }
       />
     </div>
   );

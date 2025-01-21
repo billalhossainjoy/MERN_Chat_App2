@@ -1,5 +1,6 @@
 interface IUser {
-  firstName: string;
+  fullName: string;
   email: string;
   profilePic: string;
+  createdAt: Date;
 }

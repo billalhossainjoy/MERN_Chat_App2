@@ -9,7 +9,6 @@ import bcrypt from "bcryptjs";
 class AuthController extends JWT {
   signup = AsyncHandler(async (req, res) => {
     try {
-      await UserModel.deleteMany();
       const { fullName, email, password } = signupSchema.parse(req.body);
 
       console.log("test");
@@ -41,6 +40,9 @@ class AuthController extends JWT {
         secure: process.env.NODE_ENV !== "development",
       });
       return ResApi(res, 201, "User registered successfully.", {
+        fullName: newUser.fullName,
+        email: newUser.email,
+        createdAt: newUser.createdAt,
         token: accessToken,
       });
     } catch (error) {
@@ -81,6 +83,7 @@ class AuthController extends JWT {
       return ResApi(res, 200, "User logged in successfully.", {
         fullName: existingUser.fullName,
         email: existingUser.email,
+        createdAt: existingUser.createdAt,
         accessToken,
       });
     } catch (error) {

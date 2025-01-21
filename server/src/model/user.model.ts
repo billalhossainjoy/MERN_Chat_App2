@@ -6,6 +6,7 @@ export interface User extends Document {
   email: string;
   password: string;
   profilePic: string;
+  createdAt: Date;
 }
 
 const userSchema: Schema = new Schema<User>({
@@ -25,6 +26,8 @@ const userSchema: Schema = new Schema<User>({
   profilePic: {
     type: String,
   },
+}, {
+  timestamps: true,
 });
 
 export const UserModel = mongoose.model<User>("User", userSchema);

@@ -1,6 +1,10 @@
 import { create } from "zustand";
 import { ApiClient } from "../lib/apiClient";
-import { loginSchemaType, signupSchemaType } from "../schema/auth.schema";
+import {
+  loginSchemaType,
+  signupSchemaType,
+  updateSchemaType,
+} from "../schema/auth.schema";
 import toast from "react-hot-toast";
 
 interface AuthState {
@@ -14,7 +18,7 @@ interface AuthState {
   signup: (data: signupSchemaType) => void;
   login: (data: loginSchemaType) => void;
   logout: () => void;
-  updateProfile: () => void;
+  updateProfile: (data: updateSchemaType) => void;
   connectSocket: () => void;
 }
 
@@ -26,6 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoggingOut: false,
   isLoggingIn: false,
   checkAuth: async () => {
+    set({ isCheckingAuth: true });
     try {
       const res = await ApiClient.get("/auth/check");
       set({
@@ -47,7 +52,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         data: formData,
       });
       set({
-        authUser: res.data,
+        authUser: res.data.data,
       });
       toast.success(res.data.message);
     } catch (error) {
@@ -94,6 +99,24 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isLoggingOut: false });
     }
   },
-  updateProfile: async () => {},
+  updateProfile: async (formData) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await ApiClient("/user/update-profile", {
+        method: "POST",
+        data: formData,
+      });
+      set({
+        authUser: res.data.data,
+      });
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      set({
+        isUpdatingProfile: false,
+      });
+    }
+  },
   connectSocket: async () => {},
 }));

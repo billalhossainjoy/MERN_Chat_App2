@@ -9,9 +9,12 @@ import { useAuthStore } from "./store/auth.store";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import { useThemeStore } from "./store/theme.store";
 
 const App: React.FC = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+
+  const {theme} = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -24,15 +27,21 @@ const App: React.FC = () => {
       </div>
     );
   return (
-    <div>
+    <div data-theme={theme} className="h-screen">
       <Navbar />
       <Routes>
         <Route
           path="/"
           element={authUser ? <HomePage /> : <Navigate to="/login" />}
         />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+        />
         <Route
           path="/settings"
           element={authUser ? <SettingsPage /> : <Navigate to="/login" />}

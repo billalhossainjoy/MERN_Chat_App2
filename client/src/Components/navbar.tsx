@@ -35,8 +35,8 @@ const Navbar: React.FC = () => {
             {authUser && (
               <>
                 <Link to="/profile" className="btn btn-sm gap-2">
-                  <User />
-                  <span>Profile</span>
+                  <User className="w-4 h-4"/>
+                  <span className="hidden sm:inline">Profile</span>
                 </Link>
                 <button
                   className="flex items-center gap-2"
