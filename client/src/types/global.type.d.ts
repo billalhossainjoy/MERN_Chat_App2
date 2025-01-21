@@ -5,3 +5,12 @@ interface IUser {
   profilePic?: string;
   createdAt: Date;
 }
+
+interface IMessage {
+  _id: string;
+  senderId: string;
+  reciverId: string;
+  text?: string;
+  image?: string;
+}
+

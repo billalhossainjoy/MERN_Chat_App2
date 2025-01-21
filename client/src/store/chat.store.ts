@@ -2,25 +2,37 @@ import { create } from "zustand";
 import { ApiClient } from "../lib/apiClient";
 import toast from "react-hot-toast";
 
-const date = new Date() // TODO: its for demo remove this 
+const date = new Date(); // TODO: its for demo remove this
+
+interface ISendMessage {
+  text?: string;
+  image?: string | null;
+}
 
 interface IChatStore {
-  messages: [];
+  messages: IMessage[];
   users: IUser[];
   selectedUser: IUser | null;
   isUserLoading: boolean;
   isMessagesLoading: boolean;
 
-  setSelectedUser: (user: IUser) => void;
+  setSelectedUser: (user: IUser | null) => void;
 
   getUsers: () => void;
   getMassages: (userId: string) => void;
 
-  sendMessage: () => void;
+  sendMessage: (data: ISendMessage) => void;
 }
 
-export const useChatStore = create<IChatStore>((set) => ({
-  messages: [],
+export const useChatStore = create<IChatStore>((set, get) => ({
+  messages: [
+    {
+      _id: "1",
+      senderId: "3",
+      reciverId: "2",
+      text: "name",
+    },
+  ],
   users: [
     {
       _id: "1",
@@ -59,5 +71,7 @@ export const useChatStore = create<IChatStore>((set) => ({
     }
   },
 
-  sendMessage: () => {},
+  sendMessage: (data) => {
+    const { selectedUser } = get();
+  },
 }));
