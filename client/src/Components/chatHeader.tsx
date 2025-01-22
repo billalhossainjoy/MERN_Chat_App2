@@ -12,7 +12,7 @@ const ChatHeader: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={"./images/avatar.png"} alt="" className="" />
+              <img src={selectedUser?.profilePic ? selectedUser.profilePic : "./images/avatar.png"} alt="" className="" />
             </div>
           </div>
 
