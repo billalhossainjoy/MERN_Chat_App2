@@ -6,7 +6,6 @@ import {
   updateSchemaType,
 } from "../schema/auth.schema";
 import toast from "react-hot-toast";
-import { devtools } from "zustand/middleware";
 
 interface AuthState {
   authUser: IUser | null;
@@ -24,8 +23,8 @@ interface AuthState {
   onlineUsers: string[];
 }
 
-export const useAuthStore = create<AuthState, [["zustand/devtools", never]]>(
-  devtools((set) => ({
+export const useAuthStore = create<AuthState>(
+  (set) => ({
     authUser: null,
     isCheckingAuth: false,
     isSigningUp: false,
@@ -127,5 +126,5 @@ export const useAuthStore = create<AuthState, [["zustand/devtools", never]]>(
       }
     },
     connectSocket: async () => {},
-  }))
+  })
 );
