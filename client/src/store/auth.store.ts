@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>(
     isUpdatingProfile: false,
     isLoggingOut: false,
     isLoggingIn: false,
-    onlineUsers: ["1"],
+    onlineUsers: [],
     checkAuth: async () => {
       set({ isCheckingAuth: true });
       try {

@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth.store";
 
 const ChatHeader: React.FC = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
-	const { onlineUsers } = useAuthStore();
+  const { onlineUsers } = useAuthStore();
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -12,13 +12,23 @@ const ChatHeader: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={selectedUser?.profilePic ? selectedUser.profilePic : "./images/avatar.png"} alt="" className="" />
+              <img
+                src={
+                  selectedUser?.profilePic
+                    ? selectedUser.profilePic
+                    : "./images/avatar.png"
+                }
+                alt=""
+                className=""
+              />
             </div>
           </div>
 
           <div>
             <h3 className="font-medium">{selectedUser?.fullName}</h3>
-            <p className="text-sm text-base-content/70">online</p>
+            <p className="text-sm text-base-content/70">
+              {onlineUsers.includes(selectedUser?._id as string) ? "online": "offline"}
+            </p>
           </div>
         </div>
 
