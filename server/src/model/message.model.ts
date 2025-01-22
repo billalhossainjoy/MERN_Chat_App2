@@ -8,20 +8,23 @@ interface Message extends Document {
   image: string;
 }
 
-const messageSchema: Schema = new Schema<Message>({
-  senderId: {
-    type: Schema.ObjectId,
-    ref: "User",
-    required: true,
+const messageSchema: Schema = new Schema<Message>(
+  {
+    senderId: {
+      type: Schema.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    reciverId: {
+      type: Schema.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    text: { type: String },
+    image: { type: String },
   },
-  reciverId: {
-    type: Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  text: { type: String },
-  image: { type: String },
-});
+  { timestamps: true }
+);
 
 const MessageModel = model<Message>("Message", messageSchema);
 

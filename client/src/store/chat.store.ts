@@ -25,22 +25,8 @@ interface IChatStore {
 }
 
 export const useChatStore = create<IChatStore>((set, get) => ({
-  messages: [
-    {
-      _id: "1",
-      senderId: "3",
-      reciverId: "2",
-      text: "name",
-    },
-  ],
-  users: [
-    {
-      _id: "1",
-      fullName: "Billal",
-      email: "mail",
-      createdAt: date,
-    },
-  ],
+  messages: [],
+  users: [],
   selectedUser: null,
   isUserLoading: false,
   isMessagesLoading: false,
@@ -48,9 +34,8 @@ export const useChatStore = create<IChatStore>((set, get) => ({
   getUsers: async () => {
     set({ isUserLoading: true });
     try {
-      const res = await ApiClient.get("/messages/users");
+      const res = await ApiClient.get("/message/get-user-slidebar");
       set({ users: res.data.data });
-      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -61,9 +46,8 @@ export const useChatStore = create<IChatStore>((set, get) => ({
   getMassages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
-      const res = await ApiClient.get(`/messages/${userId}`);
+      const res = await ApiClient.get(`/message/${userId}`);
       set({ messages: res.data.data });
-      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -71,7 +55,19 @@ export const useChatStore = create<IChatStore>((set, get) => ({
     }
   },
 
-  sendMessage: (data) => {
+  sendMessage: async (data) => {
     const { selectedUser } = get();
+    try {
+      const res = await ApiClient(`/message/send/${selectedUser?._id}`, {
+        method: "POST",
+        data,
+      });
+      set((state) => ({
+        messages: [...state.messages, res.data.data],
+      }));
+      return res
+    } catch (error) {
+      console.log(error);
+    }
   },
 }));

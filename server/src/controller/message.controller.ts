@@ -3,14 +3,15 @@ import Cloudinary from "../lib/Cloudinary";
 import { ErrorApi } from "../lib/ErrorHandler";
 import ResApi from "../lib/ResponseApi";
 import MessageModel from "../model/message.model";
+import { UserModel } from "../model/user.model";
 
 class MessageController extends Cloudinary {
   getUserForSlidebar = AsyncHandler(async (req, res) => {
     try {
       const loggedInUserId = req.user?._id;
-      if (loggedInUserId) throw new ErrorApi(401, " authenticated");
+      if (!loggedInUserId) throw new ErrorApi(401, "Unauthorized");
 
-      const users = await MessageModel.find({
+      const users = await UserModel.find({
         _id: { $ne: loggedInUserId },
       }).select("-password");
       return ResApi(res, 200, "ok", users);
@@ -18,17 +19,21 @@ class MessageController extends Cloudinary {
       throw error;
     }
   });
+
   getMessage = AsyncHandler(async (req, res) => {
     try {
-      const { id: userToChatId } = req.params;
+      const { id: reciverId } = req.params;
       const senderId = req.user?._id;
 
       const messages = await MessageModel.find({
         $or: [
-          { senderId, userToChatId },
-          { senderId: userToChatId, userToChatId },
+          { senderId: senderId, reciverId: reciverId },
+          { senderId: reciverId, reciverId: senderId },
         ],
       });
+
+      console.log(messages);
+
       return ResApi(res, 200, "ok", messages);
     } catch (error) {
       throw error;
@@ -53,11 +58,11 @@ class MessageController extends Cloudinary {
         text,
         image: imageUrl,
       });
-      
+
       await newMessage.save();
 
       // TODO: realtime funtionality add here
-      
+
       return ResApi(res, 200, "ok", newMessage);
     } catch (error) {
       throw error;

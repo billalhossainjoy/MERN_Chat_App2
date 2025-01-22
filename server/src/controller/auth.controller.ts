@@ -11,9 +11,7 @@ class AuthController extends JWT {
     try {
       const { fullName, email, password } = signupSchema.parse(req.body);
 
-      console.log("test");
       const existingUser = await UserModel.findOne({ email });
-      console.log("test2");
 
       if (existingUser) {
         throw new ErrorApi(409, "Email already exists");
@@ -106,6 +104,7 @@ class AuthController extends JWT {
       if (!user) {
         throw new ErrorApi(401, "Unauthorized");
       }
+      
       return ResApi(res, 200, "ok", user);
     } catch (error) {
       throw error;

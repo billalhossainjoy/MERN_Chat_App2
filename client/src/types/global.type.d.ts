@@ -12,5 +12,5 @@ interface IMessage {
   reciverId: string;
   text?: string;
   image?: string;
+  createdAt: Date;
 }
-

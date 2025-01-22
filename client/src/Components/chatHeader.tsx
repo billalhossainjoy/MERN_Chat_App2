@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth.store";
 
 const ChatHeader: React.FC = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
-  const { onlineUsers } = useAuthStore();
+	const { onlineUsers } = useAuthStore();
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -17,7 +17,7 @@ const ChatHeader: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="font-medium">name</h3>
+            <h3 className="font-medium">{selectedUser?.fullName}</h3>
             <p className="text-sm text-base-content/70">online</p>
           </div>
         </div>

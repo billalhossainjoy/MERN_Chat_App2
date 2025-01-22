@@ -25,7 +25,9 @@ export const Protected = AsyncHandler(async (req, res, next) => {
       throw new ErrorApi(401, "Invalid token");
     }
 
-    const user = await UserModel.findOne({ id: token.id }).select("-password");
+    const user = await UserModel.findOne({ _id: decoded._id }).select(
+      "-password"
+    );
 
     if (!user) {
       throw new ErrorApi(401, "User not found");

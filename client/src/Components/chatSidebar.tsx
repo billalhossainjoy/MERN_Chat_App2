@@ -57,9 +57,7 @@ const ChatSideBar: React.FC = () => {
               )}
             </div>
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate">
-                {user.fullName}
-              </div>
+              <div className="font-medium truncate">{user.fullName}</div>
               <div className="text-sm text-zinc-400">
                 {onlineUsers.includes(user._id) ? "Online" : "offline"}
               </div>
@@ -67,9 +65,11 @@ const ChatSideBar: React.FC = () => {
           </button>
         ))}
 
-        {
-          filterdUsers.length === 0 && <div className="text-center text-zinc-500 py-4 h-full flex justify-center items-center">No online users</div>
-        }
+        {filterdUsers.length === 0 && (
+          <div className="text-center text-zinc-500 py-4 h-full flex justify-center items-center">
+            No online users
+          </div>
+        )}
       </div>
     </aside>
   );

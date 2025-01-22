@@ -15,7 +15,7 @@ class MessageRouter extends MessageController {
       .route("/get-user-slidebar")
       .get(Protected, this.getUserForSlidebar.bind(this));
     this.router.route("/:id").get(Protected, this.getMessage.bind(this));
-    this.router.route("/send/:id").get(Protected, this.sendMessage)
+    this.router.route("/send/:id").post(Protected, this.sendMessage)
   }
 }
 

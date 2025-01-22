@@ -27,15 +27,17 @@ const MessageInput: React.FC = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleSendMessage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSendMessage = async (
+    e: React.MouseEvent<HTMLButtonElement | MouseEvent>
+  ) => {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;
 
     try {
-      await sendMessage({
+      sendMessage({
         text: text.trim(),
         image: imagePreview,
-      });
+      })
     } catch (error) {
       console.error("failed to send message", error);
     }
@@ -43,10 +45,14 @@ const MessageInput: React.FC = () => {
   return (
     <div className="p-4 w-full border-t border-base-300">
       {imagePreview && (
-        <div>
+        <div className="">
           <div>
-            <img src="" alt="" />
-            <button>
+            <img
+              src={imagePreview}
+              alt=""
+              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+            />
+            <button onClick={removeImage}>
               <X className="size-3" />
             </button>
           </div>
@@ -81,6 +87,7 @@ const MessageInput: React.FC = () => {
           type="submit"
           className="btn btn-md text-base-content btn-circle"
           disabled={!text.trim() && !imagePreview}
+          onClick={(e) => handleSendMessage(e)}
         >
           <Send size={20} />
         </button>
