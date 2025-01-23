@@ -32,8 +32,6 @@ class MessageController extends Cloudinary {
         ],
       });
 
-      console.log(messages);
-
       return ResApi(res, 200, "ok", messages);
     } catch (error) {
       throw error;

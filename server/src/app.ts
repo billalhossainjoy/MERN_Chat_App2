@@ -6,6 +6,7 @@ import authRouter from "./router/auth.router";
 import cookieParser from "cookie-parser";
 import userRouter from "./router/user.router";
 import messageRouter from "./router/message.router";
+import connectSocket from "./socket";
 
 const app = express();
 
@@ -19,8 +20,11 @@ app.use(
 
 const server = http.createServer(app);
 
+// Socket io
+connectSocket(server)
+
 // Middleware
-app.use(express.json({limit: "10mb"}));
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 
