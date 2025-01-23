@@ -35,6 +35,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isLoggingIn: false,
   onlineUsers: [],
   socket: null,
+
   checkAuth: async () => {
     set({ isCheckingAuth: true });
     try {
@@ -51,6 +52,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ isCheckingAuth: false });
     }
   },
+
   signup: async (formData) => {
     set({ isSigningUp: true });
     try {
@@ -72,6 +74,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ isSigningUp: false });
     }
   },
+
   login: async (formData) => {
     set({ isLoggingIn: true });
     try {
@@ -94,6 +97,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ isLoggingIn: false });
     }
   },
+
   logout: async () => {
     set({ isLoggingOut: true });
     try {
@@ -133,11 +137,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
     }
   },
+
   connectSocket: async () => {
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(import.env.VITE_REST_API, {
+    const socket = io(import.meta.env.VITE_REST_API, {
       query: {
         userId: authUser._id,
       },
@@ -145,10 +150,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     socket.connect();
     set({ socket });
+
+    socket.on("getOnlineUsers", (userIds) => {
+      console.log(userIds);
+      set({ onlineUsers: userIds });
+    });
   },
-  
+
   disConnectSocket: async () => {
-    console.log("call disconnect")
     if (get().socket?.connected) get().socket?.disconnect();
   },
 }));

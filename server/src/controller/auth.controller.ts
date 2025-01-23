@@ -38,6 +38,7 @@ class AuthController extends JWT {
         secure: process.env.NODE_ENV !== "development",
       });
       return ResApi(res, 201, "User registered successfully.", {
+        _id: newUser.id,
         fullName: newUser.fullName,
         email: newUser.email,
         createdAt: newUser.createdAt,
@@ -79,6 +80,7 @@ class AuthController extends JWT {
       });
 
       return ResApi(res, 200, "User logged in successfully.", {
+        _id: existingUser.id,
         fullName: existingUser.fullName,
         email: existingUser.email,
         createdAt: existingUser.createdAt,
