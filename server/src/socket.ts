@@ -18,7 +18,6 @@ function connectSocket(server: http.Server) {
 
 
   io.on("connection", (socket) => {
-    console.log("a user connected", socket.id); // TODO: Remove before deploy
 
     const userId = socket.handshake.query.userId;
     console.log(userId);
@@ -27,7 +26,6 @@ function connectSocket(server: http.Server) {
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
     socket.on("disconnect", () => {
-      console.log("a user disconnected", socket.id); // TODO: Remove before deploy
       delete userSocketMap[userId as string];
       io.emit("getOnlineUsers", Object.keys(userSocketMap));
     });
