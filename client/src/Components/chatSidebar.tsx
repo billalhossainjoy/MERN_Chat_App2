@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/auth.store";
 
 const ChatSideBar: React.FC = () => {
-  const { getUsers, users, selectedUser, setSelectedUser, isUserLoading } =
+  const { getUsers, users, selectedUser, setSelectedUser } =
     useChatStore();
 
   const { onlineUsers } = useAuthStore();
