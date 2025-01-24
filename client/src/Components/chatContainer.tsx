@@ -6,14 +6,23 @@ import MessageInput from "./messageInput";
 import { parseTime } from "../lib/utils";
 
 const ChatContainer: React.FC = () => {
-  const { messages, getMassages, selectedUser } = useChatStore();
+  const {
+    messages,
+    getMassages,
+    selectedUser,
+    subscribeToMessage,
+    unSubscribeFromMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
   // const messageEndRef = useRef<any>(null);
 
   useEffect(() => {
     if (selectedUser?._id) getMassages(selectedUser._id);
-  }, [selectedUser, getMassages]);
 
+    subscribeToMessage();
+
+    return () => unSubscribeFromMessages();
+  }, [selectedUser, getMassages, subscribeToMessage, unSubscribeFromMessages]);
 
   return (
     <div className="flex-1 flex flex-col overflow-auto">

@@ -1,9 +1,11 @@
+import { io } from "../app";
 import AsyncHandler from "../lib/AsyncHandler";
 import Cloudinary from "../lib/Cloudinary";
 import { ErrorApi } from "../lib/ErrorHandler";
 import ResApi from "../lib/ResponseApi";
 import MessageModel from "../model/message.model";
 import { UserModel } from "../model/user.model";
+import { getReciverSocketId } from "../socket";
 
 class MessageController extends Cloudinary {
   getUserForSlidebar = AsyncHandler(async (req, res) => {
@@ -59,7 +61,10 @@ class MessageController extends Cloudinary {
 
       await newMessage.save();
 
-      // TODO: realtime funtionality add here
+      const reciverSocketId = getReciverSocketId(reciverId)
+      if (reciverId) {
+        io.to(reciverSocketId).emit("newMessage", newMessage);
+      }
 
       return ResApi(res, 200, "ok", newMessage);
     } catch (error) {

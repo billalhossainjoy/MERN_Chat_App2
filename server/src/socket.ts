@@ -1,5 +1,11 @@
-import { Server } from "socket.io";
+import {  Server } from "socket.io";
 import http from "http";
+
+const userSocketMap: Record<string, string> = {};
+
+export const getReciverSocketId = (userId : string) => {
+  return userSocketMap[userId]
+}
 
 function connectSocket(server: http.Server) {
   const io = new Server(server, {
@@ -10,7 +16,6 @@ function connectSocket(server: http.Server) {
     },
   });
 
-  const userSocketMap: Record<string, string> = {};
 
   io.on("connection", (socket) => {
     console.log("a user connected", socket.id); // TODO: Remove before deploy
@@ -26,9 +31,8 @@ function connectSocket(server: http.Server) {
       delete userSocketMap[userId as string];
       io.emit("getOnlineUsers", Object.keys(userSocketMap));
     });
-
-    return io;
   });
+  return io;
 }
 
 export default connectSocket;

@@ -21,7 +21,7 @@ app.use(
 const server = http.createServer(app);
 
 // Socket io
-export const io = connectSocket(server)
+const io = connectSocket(server)
 
 // Middleware
 app.use(express.json({ limit: "10mb" }));
@@ -40,3 +40,4 @@ app.use(NotFoundHandler);
 app.use(DefaultErrorHandler);
 
 export default server;
+export {io}
