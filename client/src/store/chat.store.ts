@@ -75,9 +75,10 @@ export const useChatStore = create<IChatStore>((set, get) => ({
     const socket = useAuthStore.getState().socket;
 
     socket?.on("newMessage", (message: IMessage) => {
-      set({
-        messages: [...get().messages, message],
-      });
+      if (selectedUser._id === message.senderId)
+        set({
+          messages: [...get().messages, message],
+        });
     });
   },
 

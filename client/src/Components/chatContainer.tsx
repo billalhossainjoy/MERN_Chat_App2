@@ -14,7 +14,7 @@ const ChatContainer: React.FC = () => {
     unSubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
-  // const messageEndRef = useRef<any>(null);
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (selectedUser?._id) getMassages(selectedUser._id);
@@ -23,6 +23,11 @@ const ChatContainer: React.FC = () => {
 
     return () => unSubscribeFromMessages();
   }, [selectedUser, getMassages, subscribeToMessage, unSubscribeFromMessages]);
+
+  useEffect(() => {
+    if(messages && messageEndRef.current)
+    messageEndRef.current.scrollIntoView({behavior:"smooth"})
+  },[messages]);
 
   return (
     <div className="flex-1 flex flex-col overflow-auto">
@@ -34,7 +39,7 @@ const ChatContainer: React.FC = () => {
             className={`chat ${
               message.senderId === authUser?._id ? "chat-end" : "chat-start"
             } `}
-            // ref={messageEndRef}
+            ref={messageEndRef}
           >
             <div className="chat-image avatar">
               <div className="size-10 rounded-full">
