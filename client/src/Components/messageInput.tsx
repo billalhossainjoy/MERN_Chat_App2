@@ -38,6 +38,7 @@ const MessageInput: React.FC = () => {
         text: text.trim(),
         image: imagePreview,
       })
+      setText("");
     } catch (error) {
       console.error("failed to send message", error);
     }
