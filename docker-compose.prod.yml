@@ -1,4 +1,5 @@
-name: MERN_ChatApp2
+version: '3.9'
+
 
 services:
   mongo:
