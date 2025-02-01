@@ -7,7 +7,11 @@
       <img src="./readme/images/tailwind.svg" alt="" />
       <img src="./readme/images/mongodb.svg" alt="" />
     </div>
+<<<<<<< HEAD
     <p>
+=======
+    <p style="font-size: 14px; text-align: center; margin-top: 15px; margin-bottom:4px;">
+>>>>>>> 4a44edd6ba592cd3a56eee685d33430bfa08cd7c
       Build a Chat application using MERN Stack.
     </p>
   </div>
@@ -34,3 +38,4 @@
 
 
 </div>
+
