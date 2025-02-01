@@ -7,7 +7,7 @@
       <img src="./readme/images/tailwind.svg" alt="" />
       <img src="./readme/images/mongodb.svg" alt="" />
     </div>
-    <p style="font-size: 14px; text-align: center; margin-top: 15px; margin-bottom:4px;">
+    <p>
       Build a Chat application using MERN Stack.
     </p>
   </div>
