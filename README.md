@@ -1,6 +1,6 @@
 <div>
   <div align="center">
-    <h1>MERN E-Commerce application.</h1>
+    <h1>MERN Chat application.</h1>
     <div>
       <img src="./readme/images/typescript.svg" alt="" />
       <img src="./readme/images/react.svg" alt="" />
